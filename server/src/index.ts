@@ -7,6 +7,8 @@ import morgan from "morgan";
 
 /* ROUTE IMPORTS */
 
+import courseRouter from "./routes/courseRoutes";
+
 /* CONFIGURATIONS */
 dotenv.config();
 const isProduction = process.env.NODE_ENV === "production";
@@ -25,6 +27,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.use("/api/course", courseRouter);
 
 /* SERVER */
 const port = process.env.PORT || 3000;
