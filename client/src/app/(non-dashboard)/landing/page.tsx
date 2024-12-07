@@ -1,12 +1,30 @@
 "use client";
 
+import CourseCardSearch from "@/components/course-card-search";
 import { useCarousel } from "@/hooks/useCarousel";
+import { useGetCoursesQuery } from "@/state/api";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Landing = () => {
   const currentImage = useCarousel({ totalImages: 3, interval: 4000 });
+  const router = useRouter();
+
+  const {
+    data: courses,
+    isLoading,
+    isError,
+  } = useGetCoursesQuery({
+    category: "all",
+  });
+
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/search?id=${courseId}`, {
+      scroll: false,
+    });
+  };
 
   return (
     <motion.div
@@ -76,6 +94,23 @@ const Landing = () => {
               {tag}
             </span>
           ))}
+        </div>
+        <div className="landing__courses">
+          {courses &&
+            courses.slice(0, 4).map((course, index) => (
+              <motion.div
+                key={course.courseId}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                viewport={{ amount: 0.4 }}
+              >
+                <CourseCardSearch
+                  course={course}
+                  onClick={() => handleCourseClick(course.courseId)}
+                />
+              </motion.div>
+            ))}
         </div>
       </motion.div>
     </motion.div>
