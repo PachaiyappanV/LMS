@@ -1,4 +1,8 @@
-import { createClerkClient } from "@clerk/express";
+import {
+  clerkMiddleware,
+  createClerkClient,
+  requireAuth,
+} from "@clerk/express";
 import cors from "cors";
 import dotenv from "dotenv";
 import * as dynamoose from "dynamoose";
@@ -28,6 +32,7 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors());
+app.use(clerkMiddleware());
 
 /* ROUTES */
 app.get("/", (req, res) => {
@@ -35,7 +40,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/course", courseRouter);
-app.use("/api/user/clerk", userClerkRoutes);
+app.use("/api/user/clerk", requireAuth(), userClerkRoutes);
 
 /* SERVER */
 const port = process.env.PORT || 3000;
