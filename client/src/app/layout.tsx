@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
         <body>
           <Providers>
             <div className="root-layout">{children}</div>
+            <Toaster richColors closeButton />
           </Providers>
         </body>
       </html>
