@@ -9,7 +9,7 @@ const customBaseQuery = async (
   extraOptions: any
 ) => {
   const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: async (headers) => {
       const token = await window.Clerk?.session?.getToken();
       if (token) {
@@ -69,7 +69,7 @@ export const api = createApi({
     */
     updateUser: build.mutation<User, Partial<User> & { userId: string }>({
       query: ({ userId, ...updatedUser }) => ({
-        url: `users/clerk/${userId}`,
+        url: `user/clerk/${userId}`,
         method: "PUT",
         body: updatedUser,
       }),

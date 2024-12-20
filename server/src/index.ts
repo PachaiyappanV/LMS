@@ -14,6 +14,7 @@ import morgan from "morgan";
 
 import courseRouter from "./routes/courseRoutes";
 import userClerkRoutes from "./routes/userClerkRoutes";
+import transactionRoutes from "./routes/transactionRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/course", courseRouter);
 app.use("/api/user/clerk", requireAuth(), userClerkRoutes);
+app.use("/api/transation", requireAuth(), transactionRoutes);
 
 /* SERVER */
 const port = process.env.PORT || 3000;
