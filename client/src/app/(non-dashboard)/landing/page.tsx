@@ -2,7 +2,7 @@
 
 import CourseCardSearch from "@/components/course-card-search";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCarousel } from "@/hooks/useCarousel";
+import { useCarousel } from "@/hooks/use-carousel";
 import { useGetCoursesQuery } from "@/state/api";
 import { motion } from "framer-motion";
 import Image from "next/image";
