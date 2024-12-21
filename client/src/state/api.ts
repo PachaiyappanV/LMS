@@ -85,11 +85,25 @@ export const api = createApi({
     }),
 
     getCourse: build.query<Course, string>({
-      query: (id) => `courses/${id}`,
+      query: (id) => `course/${id}`,
       providesTags: (result, error, id) => [{ type: "Courses", id }],
+    }),
+    createStripePaymentIntent: build.mutation<
+      { clientSecret: string },
+      { amount: number }
+    >({
+      query: ({ amount }) => ({
+        url: `/transaction/stripe/payment-intent`,
+        method: "POST",
+        body: { amount },
+      }),
     }),
   }),
 });
 
-export const { useGetCoursesQuery, useGetCourseQuery, useUpdateUserMutation } =
-  api;
+export const {
+  useGetCoursesQuery,
+  useGetCourseQuery,
+  useUpdateUserMutation,
+  useCreateStripePaymentIntentMutation,
+} = api;
