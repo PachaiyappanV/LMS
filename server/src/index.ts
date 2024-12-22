@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/course", courseRouter);
 app.use("/api/user/clerk", requireAuth(), userClerkRoutes);
-app.use("/api/transation", requireAuth(), transactionRoutes);
+app.use("/api/transaction", requireAuth(), transactionRoutes);
 
 /* SERVER */
 const port = process.env.PORT || 3000;
