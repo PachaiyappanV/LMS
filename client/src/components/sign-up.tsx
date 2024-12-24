@@ -21,10 +21,15 @@ const SignUpComponent = () => {
     }
 
     const userType = user?.publicMetadata?.userType as string;
+    if (!user) {
+      return "/signin";
+    }
+
     if (userType === "teacher") {
       return "/teacher/courses";
+    } else {
+      return "/user/courses";
     }
-    return "/user/courses";
   };
 
   return (
