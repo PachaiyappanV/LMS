@@ -88,6 +88,18 @@ export const api = createApi({
       query: (id) => `course/${id}`,
       providesTags: (result, error, id) => [{ type: "Courses", id }],
     }),
+
+    createCourse: build.mutation<
+      Course,
+      { teacherId: string; teacherName: string }
+    >({
+      query: (body) => ({
+        url: `courses`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Courses"],
+    }),
     createStripePaymentIntent: build.mutation<
       { clientSecret: string },
       { amount: number }
