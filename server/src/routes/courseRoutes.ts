@@ -4,7 +4,7 @@ import {
   createCourse,
   deleteCourse,
   getCourse,
-  listCourses,
+  getCourses,
   updateCourse,
 } from "../controllers/courseController";
 import { requireAuth } from "@clerk/express";
@@ -12,7 +12,7 @@ import { requireAuth } from "@clerk/express";
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/", listCourses);
+router.get("/", getCourses);
 router.post("/", requireAuth(), createCourse);
 
 router.get("/:courseId", getCourse);

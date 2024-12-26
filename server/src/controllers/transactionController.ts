@@ -45,6 +45,26 @@ export const createStripePaymentIntent = async (
   }
 };
 
+export const getTransactions = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId } = req.query;
+
+  try {
+    const transactions = userId
+      ? await Transaction.query("userId").eq(userId).exec()
+      : await Transaction.scan().exec();
+    console.log(transactions);
+    res.json({
+      message: "Transactions retrieved successfully",
+      data: transactions,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving transactions", error });
+  }
+};
+
 export const createTransaction = async (
   req: Request,
   res: Response
