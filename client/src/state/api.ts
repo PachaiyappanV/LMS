@@ -155,4 +155,7 @@ export const {
   useCreateStripePaymentIntentMutation,
   useCreateTransactionMutation,
   useGetTransactionsQuery,
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
 } = api;
