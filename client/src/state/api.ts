@@ -114,6 +114,19 @@ export const api = createApi({
         { type: "Courses", id: courseId },
       ],
     }),
+
+    deleteCourse: build.mutation<{ message: string }, string>({
+      query: (courseId) => ({
+        url: `courses/${courseId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Courses"],
+    }),
+
+    getTransactions: build.query<Transaction[], string>({
+      query: (userId) => `transaction?userId=${userId}`,
+    }),
+
     createStripePaymentIntent: build.mutation<
       { clientSecret: string },
       { amount: number }
@@ -125,13 +138,6 @@ export const api = createApi({
       }),
     }),
 
-    deleteCourse: build.mutation<{ message: string }, string>({
-      query: (courseId) => ({
-        url: `courses/${courseId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Courses"],
-    }),
     createTransaction: build.mutation<Transaction, Partial<Transaction>>({
       query: (transaction) => ({
         url: "transaction",
@@ -148,4 +154,5 @@ export const {
   useUpdateUserMutation,
   useCreateStripePaymentIntentMutation,
   useCreateTransactionMutation,
+  useGetTransactionsQuery,
 } = api;
