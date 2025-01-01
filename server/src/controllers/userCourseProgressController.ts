@@ -58,3 +58,48 @@ export const getUserCourseProgress = async (
       .json({ message: "Error retrieving user course progress", error });
   }
 };
+
+export const updateUserCourseProgress = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId, courseId } = req.params;
+  const progressData = req.body;
+
+  try {
+    let progress = await UserCourseProgress.get({ userId, courseId });
+
+    if (!progress) {
+      // If no progress exists, create initial progress
+      progress = new UserCourseProgress({
+        userId,
+        courseId,
+        enrollmentDate: new Date().toISOString(),
+        overallProgress: 0,
+        sections: progressData.sections || [],
+        lastAccessedTimestamp: new Date().toISOString(),
+      });
+    } else {
+      // Merge existing progress with new progress data
+      progress.sections = mergeSections(
+        progress.sections,
+        progressData.sections || []
+      );
+      progress.lastAccessedTimestamp = new Date().toISOString();
+      progress.overallProgress = calculateOverallProgress(progress.sections);
+    }
+
+    await progress.save();
+
+    res.json({
+      message: "",
+      data: progress,
+    });
+  } catch (error) {
+    console.error("Error updating progress:", error);
+    res.status(500).json({
+      message: "Error updating user course progress",
+      error,
+    });
+  }
+};
