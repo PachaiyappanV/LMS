@@ -100,7 +100,7 @@ export const api = createApi({
       { teacherId: string; teacherName: string }
     >({
       query: (body) => ({
-        url: `courses`,
+        url: `course`,
         method: "POST",
         body,
       }),
@@ -112,7 +112,7 @@ export const api = createApi({
       { courseId: string; formData: FormData }
     >({
       query: ({ courseId, formData }) => ({
-        url: `courses/${courseId}`,
+        url: `course/${courseId}`,
         method: "PUT",
         body: formData,
       }),
@@ -123,7 +123,7 @@ export const api = createApi({
 
     deleteCourse: build.mutation<{ message: string }, string>({
       query: (courseId) => ({
-        url: `courses/${courseId}`,
+        url: `course/${courseId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Courses"],
@@ -171,6 +171,16 @@ export const api = createApi({
         body: transaction,
       }),
     }),
+
+    /* 
+    ===============
+    USER COURSE PROGRESS
+    =============== 
+    */
+    getUserEnrolledCourses: build.query<Course[], string>({
+      query: (userId) => `user/course-progress/${userId}/enrolled-courses`,
+      providesTags: ["Courses", "UserCourseProgress"],
+    }),
   }),
 });
 
@@ -185,4 +195,5 @@ export const {
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useGetUploadVideoUrlMutation,
+  useGetUserEnrolledCoursesQuery,
 } = api;

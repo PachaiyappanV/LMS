@@ -359,9 +359,6 @@ async function uploadVideo(
 
   try {
     const { uploadUrl, videoUrl } = await getUploadVideoUrl({
-      courseId,
-      sectionId,
-      chapterId: chapter.chapterId,
       fileName: file.name,
       fileType: file.type,
     }).unwrap();
