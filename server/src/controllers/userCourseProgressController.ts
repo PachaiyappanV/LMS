@@ -33,3 +33,28 @@ export const getUserEnrolledCourses = async (
       .json({ message: "Error retrieving enrolled courses", error });
   }
 };
+
+export const getUserCourseProgress = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId, courseId } = req.params;
+
+  try {
+    const progress = await UserCourseProgress.get({ userId, courseId });
+    if (!progress) {
+      res
+        .status(404)
+        .json({ message: "Course progress not found for this user" });
+      return;
+    }
+    res.json({
+      message: "Course progress retrieved successfully",
+      data: progress,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving user course progress", error });
+  }
+};
