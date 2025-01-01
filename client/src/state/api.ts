@@ -76,6 +76,12 @@ export const api = createApi({
       invalidatesTags: ["Users"],
     }),
 
+    /* 
+    ===============
+    COURSES
+    =============== 
+    */
+
     getCourses: build.query<Course[], { category?: string }>({
       query: ({ category }) => ({
         url: "course",
@@ -123,6 +129,26 @@ export const api = createApi({
       invalidatesTags: ["Courses"],
     }),
 
+    getUploadVideoUrl: build.mutation<
+      { uploadUrl: string; videoUrl: string },
+      {
+        fileName: string;
+        fileType: string;
+      }
+    >({
+      query: ({ fileName, fileType }) => ({
+        url: `course/get-upload-video-url`,
+        method: "POST",
+        body: { fileName, fileType },
+      }),
+    }),
+
+    /* 
+    ===============
+    TRANSACTIONS
+    =============== 
+    */
+
     getTransactions: build.query<Transaction[], string>({
       query: (userId) => `transaction?userId=${userId}`,
     }),
@@ -158,4 +184,5 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
+  useGetUploadVideoUrlMutation,
 } = api;
