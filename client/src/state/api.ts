@@ -186,7 +186,7 @@ export const api = createApi({
       { userId: string; courseId: string }
     >({
       query: ({ userId, courseId }) =>
-        `users/course-progress/${userId}/courses/${courseId}`,
+        `user/course-progress/${userId}/courses/${courseId}`,
       providesTags: ["UserCourseProgress"],
     }),
 
@@ -201,7 +201,7 @@ export const api = createApi({
       }
     >({
       query: ({ userId, courseId, progressData }) => ({
-        url: `users/course-progress/${userId}/courses/${courseId}`,
+        url: `user/course-progress/${userId}/courses/${courseId}`,
         method: "PUT",
         body: progressData,
       }),
