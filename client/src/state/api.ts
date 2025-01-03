@@ -244,4 +244,6 @@ export const {
   useDeleteCourseMutation,
   useGetUploadVideoUrlMutation,
   useGetUserEnrolledCoursesQuery,
+  useGetUserCourseProgressQuery,
+  useUpdateUserCourseProgressMutation,
 } = api;
